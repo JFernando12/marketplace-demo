@@ -88,6 +88,9 @@ const Sidebar = ({
               <Typography variant="h6" fontWeight="bold">
                 Rol: {user.role}
               </Typography>
+              <Typography variant="p" fontWeight="bold">
+                Usuario: {user.email}
+              </Typography>
             </Box>
             <List>
               {navItems.map(({ text, icon }) => {

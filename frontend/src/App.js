@@ -2,7 +2,7 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { createTheme } from '@mui/material/styles';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { themeSettings } from './theme';
 import Layout from './pages/layout';
 import Login from './pages/login';
@@ -22,6 +22,7 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
+            <Route path="/" element={<Navigate to="/mis productos" replace></Navigate>}></Route>
             <Route path="/login" Component={Login}></Route>
             <Route path="/signup" Component={Signup}></Route>
             <Route element={<PrivateRoute Component={Layout}></PrivateRoute>}>

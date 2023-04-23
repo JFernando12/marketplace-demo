@@ -31,9 +31,12 @@ export const create = async (user: CreateUser): Promise<User> => {
   }
 };
 
-export const find = async (): Promise<User[]> => {
+export const findSellers = async (): Promise<User[]> => {
   try {
-    const result: QueryResult = await pool.query('SELECT * FROM users');
+    const result: QueryResult = await pool.query(
+      'SELECT id, email FROM users WHERE role = $1',
+      ['seller']
+    );
     return result.rows;
   } catch (err) {
     throw new DatabaseConnectionError();

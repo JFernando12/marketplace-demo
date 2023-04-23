@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { body } from 'express-validator';
 import { userController } from '../controllers';
-import { validateRequest } from '../middlewares';
+import { requireAuthAdmin, validateRequest } from '../middlewares';
 
 const router = Router();
 
@@ -30,6 +30,6 @@ router.post(
   userController.signin
 );
 
-router.get('/', userController.getUsers);
+router.get('/sellers', requireAuthAdmin, userController.getSellers);
 
 export { router as routerUser };

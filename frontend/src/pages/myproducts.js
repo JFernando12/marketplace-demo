@@ -1,13 +1,29 @@
-import React from 'react';
-import { Box, useTheme } from '@mui/material';
-import { useGetProductsQuery } from '../state/api';
-import Header from '../components/Header';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Box, useTheme, Typography, Button } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
+import Header from '../components/Header';
+import { useGetProductsQuery } from '../state/api';
 
 const MyProducts = () => {
   const theme = useTheme();
-  const { data, isLoading } = useGetProductsQuery();
-  console.log('data', data);
+  const navigate = useNavigate();
+
+  const { data, isLoading, error, refetch } = useGetProductsQuery();
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  const handleLoginClick = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+  const handleSignupClick = () => {
+    localStorage.removeItem('token');
+    navigate('/signup');
+  };
 
   const columns = [
     {
@@ -55,43 +71,60 @@ const MyProducts = () => {
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="Mis Productos" />
-      <Box
-        mt="40px"
-        height="65vh"
-        sx={{
-          '& .MuiDataGrid-root': {
-            border: 'none',
-          },
-          '& .MuiDataGrid-cell': {
-            borderBottom: 'none',
-            textAlign: 'center',
-          },
-          '& .header-cell': {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderBottom: 'none',
-            textAlign: 'center',
-          },
-          '& .MuiDataGrid-virtualScroller': {
-            backgroundColor: theme.palette.primary.light,
-          },
-          '& .MuiDataGrid-footerContainer': {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: 'none',
-          },
-          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
-            color: `${theme.palette.secondary[200]} !important`,
-          },
-        }}
-      >
-        <DataGrid
-          loading={isLoading || !data}
-          getRowId={(row) => row.id}
-          rows={data || []}
-          columns={columns}
-        />
-      </Box>
+      {error ? (
+        <>
+          <Box mt="40px">
+            <Typography variant="h5" color={theme.palette.secondary[300]}>
+              No estas autorizado para esta sección.
+            </Typography>
+          </Box>
+          <Box mt="40px">
+            <Button onClick={handleLoginClick} variant="contained">
+              Iniciar sesión
+            </Button>
+            <Box display="inline" mx={1} />
+            <Button onClick={handleSignupClick} variant="outlined">
+              Registrarse
+            </Button>
+          </Box>
+        </>
+      ) : (
+        <Box
+          mt="40px"
+          height="72vh"
+          sx={{
+            '& .MuiDataGrid-root': {
+              border: 'none',
+            },
+            '& .MuiDataGrid-cell': {
+              borderBottom: 'none',
+            },
+            '& .MuiDataGrid-columnHeaders': {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderBottom: 'none',
+            },
+            '& .MuiDataGrid-virtualScroller': {
+              backgroundColor: theme.palette.primary.light,
+            },
+            '& .MuiDataGrid-footerContainer': {
+              backgroundColor: theme.palette.background.alt,
+              color: theme.palette.secondary[100],
+              borderTop: 'none',
+            },
+            '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+              color: `${theme.palette.secondary[200]} !important`,
+            },
+          }}
+        >
+          <DataGrid
+            loading={isLoading || !data}
+            getRowId={(row) => row.id}
+            rows={data || []}
+            columns={columns}
+          />
+        </Box>
+      )}
     </Box>
   );
 };

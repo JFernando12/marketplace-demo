@@ -64,8 +64,8 @@ export const signin = async (req: Request, res: Response) => {
   res.send({ token });
 };
 
-export const getUsers = async (req: Request, res: Response) => {
-  const users = await User.find();
+export const getSellers = async (req: Request, res: Response) => {
+  const users = await User.findSellers();
 
   res.send(users);
 };

@@ -30,7 +30,7 @@ export const getProductsAdmin = async (req: Request, res: Response) => {
   if (typeof user_id === 'string' && !isNaN(Number(user_id)) && user_id)
     params.user_id = parseInt(user_id);
 
-  const products = await Product.find(params);
+  const products = await Product.findAsAdmin(params);
 
   res.send(products);
 };

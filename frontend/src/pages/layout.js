@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Box, useMediaQuery } from '@mui/material';
 import { Outlet } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
 import { useGetUserQuery } from '../state/api';
@@ -9,8 +8,7 @@ import { useGetUserQuery } from '../state/api';
 const Layout = () => {
   const isNonMobile = useMediaQuery('(min-width: 600px)');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const token = useSelector((state) => state.global.token);
-  const { data } = useGetUserQuery(token);
+  const { data } = useGetUserQuery(localStorage.getItem('token'));
   console.log('dataaa', data);
 
   return (
@@ -18,7 +16,7 @@ const Layout = () => {
       <Sidebar
         user={data || {}}
         isNonMobile={isNonMobile}
-        drawerWidth="250px"
+        drawerWidth="320px"
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
       />

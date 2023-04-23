@@ -1,30 +1,44 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, TextField, Button } from '@mui/material';
+import { Box, TextField, Button, Typography, useTheme } from '@mui/material';
 import { useCreateProductApiMutation } from '../state/api';
 import Header from '../components/Header';
 
 const CreateProduct = () => {
+  const theme = useTheme();
+
   const [name, setName] = useState('');
   const [sku, setSku] = useState('');
   const [quantity, setQuantity] = useState('');
   const [price, setPrice] = useState('');
   const navigate = useNavigate();
 
+  const [errors, setErrors] = useState(null);
   const [createProduct, { isLoading }] = useCreateProductApiMutation({
-    onSuccess: () => {
-      navigate('/mis productos', { replace: true });
-    },
-    onError: (error) => {
-      console.error(error);
-    },
     // Invalidar la caché de la consulta de productos después de la mutación
     refetchQueries: ['getProducts'],
   });
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    createProduct({ name, sku, quantity, price });
+    const { error } = await createProduct({ name, sku, quantity, price });
+
+    if (error) {
+      setErrors(error.data);
+      return;
+    }
+
+    navigate('/mis productos');
+  };
+
+  const handleLoginClick = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+  const handleSignupClick = () => {
+    localStorage.removeItem('token');
+    navigate('/signup');
   };
 
   return (
@@ -33,7 +47,7 @@ const CreateProduct = () => {
       flexDirection="column"
       alignItems="center"
       justifyContent="center"
-      height="80vh"
+      height="70vh"
     >
       <Header title="Crear Producto" />
       <Box
@@ -66,6 +80,7 @@ const CreateProduct = () => {
         <TextField
           id="quantity"
           label="Cantidad"
+          type="number"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           margin="normal"
@@ -75,6 +90,7 @@ const CreateProduct = () => {
         <TextField
           id="price"
           label="Precio"
+          type="number"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
           margin="normal"
@@ -90,6 +106,24 @@ const CreateProduct = () => {
         >
           {isLoading ? 'Creando Producto...' : 'Crear Producto'}
         </Button>
+        {errors && (
+          <>
+            <Box mt="40px">
+              <Typography variant="h5" color={theme.palette.secondary[300]}>
+                No estas autorizado para esta sección.
+              </Typography>
+            </Box>
+            <Box mt="40px">
+              <Button onClick={handleLoginClick} variant="contained">
+                Iniciar sesión
+              </Button>
+              <Box display="inline" mx={1} />
+              <Button onClick={handleSignupClick} variant="outlined">
+                Registrarse
+              </Button>
+            </Box>
+          </>
+        )}
       </Box>
     </Box>
   );

@@ -49,8 +49,7 @@ export const create = async (product: CreateProduct): Promise<Product> => {
 
 export const find = async (params?: FindParams): Promise<Product[]> => {
   try {
-    const { limit, offset, minPrice, maxPrice, sku, name, user_id } =
-      params || {};
+    const { limit, offset, minPrice, maxPrice, sku, name } = params || {};
     let query = 'SELECT * FROM products';
     const values = [];
 
@@ -80,10 +79,34 @@ export const find = async (params?: FindParams): Promise<Product[]> => {
       values.push(name);
     }
 
-    if (user_id) {
+    if (limit) {
       const paramIndex = values.length + 1;
-      const operator = minPrice || maxPrice || sku || name ? 'AND' : 'WHERE';
-      query += ` ${operator} user_id = $${paramIndex}`;
+      query += ` LIMIT $${paramIndex}`;
+      values.push(limit);
+    }
+
+    if (offset) {
+      const paramIndex = values.length + 1;
+      query += ` OFFSET $${paramIndex}`;
+      values.push(offset);
+    }
+
+    const result: QueryResult = await pool.query(query, values);
+    return result.rows;
+  } catch (err) {
+    throw new DatabaseConnectionError();
+  }
+};
+
+export const findAsAdmin = async (params?: FindParams): Promise<Product[]> => {
+  try {
+    const { limit, offset, user_id } = params || {};
+    let query =
+      'SELECT P.id, P.sku, P.name, P.price, P.quantity, U.email FROM products AS P INNER JOIN users AS U ON P.user_id=U.id';
+    const values = [];
+
+    if (user_id) {
+      query += ' WHERE P.user_id = $1';
       values.push(user_id);
     }
 

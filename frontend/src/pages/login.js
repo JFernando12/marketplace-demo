@@ -3,8 +3,6 @@ import { useSigninApiMutation } from '../state/api';
 import { saveToken } from '../services/auth';
 import { useNavigate } from 'react-router-dom';
 import '../styles/login.css';
-import { setToken } from '../state';
-import { useDispatch } from 'react-redux';
 
 const Login = () => {
   const [email, setEmail] = useState(null);
@@ -12,7 +10,6 @@ const Login = () => {
   const [errors, setErrors] = useState([]);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const onChange = (e) => {
     e.preventDefault();
@@ -32,13 +29,10 @@ const Login = () => {
       setErrors(error.data);
       return;
     }
-    console.log('dataaaaaaa', data);
     if (!data.token) return;
 
     saveToken(data.token);
-    dispatch(setToken(data.token));
-
-    navigate('/productos');
+    navigate('/');
   };
 
   return (

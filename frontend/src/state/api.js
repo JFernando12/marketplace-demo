@@ -3,7 +3,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_BASE_URL,
-    credentials: 'include',
   }),
   reducerPath: 'api',
   tagTypes: ['Products'],
@@ -49,9 +48,18 @@ export const api = createApi({
         },
       }),
     }),
-    getProductsAdminApi: build.query({
+    getSellersApi: build.query({
       query: () => ({
-        url: '/products/admin',
+        url: '/users/sellers',
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }),
+    }),
+    getProductsAdminApi: build.query({
+      query: ({ user_id }) => ({
+        url: `/products/admin?${user_id ? `user_id=${user_id}` : ''}`,
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -76,6 +84,7 @@ export const {
   useSignupApiMutation,
   useCreateProductApiMutation,
   useGetProductsQuery,
+  useGetSellersApiQuery,
   useGetProductsAdminApiQuery,
   useGetProductsBuyerApiQuery,
 } = api;

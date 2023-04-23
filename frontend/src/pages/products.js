@@ -1,13 +1,54 @@
-import React from 'react';
-import { Box, useTheme } from '@mui/material';
-import { useGetProductsAdminApiQuery } from '../state/api';
+import React, { useEffect, useState } from 'react';
+import {
+  Box,
+  useTheme,
+  Typography,
+  Button,
+  Select,
+  MenuItem,
+} from '@mui/material';
+import {
+  useGetProductsAdminApiQuery,
+  useGetSellersApiQuery,
+} from '../state/api';
 import Header from '../components/Header';
 import { DataGrid } from '@mui/x-data-grid';
+import { useNavigate } from 'react-router-dom';
 
 const Products = () => {
   const theme = useTheme();
-  const { data, isLoading } = useGetProductsAdminApiQuery();
-  console.log('data', data);
+  const navigate = useNavigate();
+  const [sellerId, setSellerId] = useState(null); // Estado local para el ID del vendedor seleccionado
+
+  const {
+    data: productsData,
+    isLoading: productsIsLoading,
+    error: productsError,
+    refetch: productsRefetch,
+  } = useGetProductsAdminApiQuery({
+    user_id: sellerId, // Incluye el ID del vendedor en la consulta de la API
+  });
+  const { data: sellersData, refetch: refetchSellers } =
+    useGetSellersApiQuery();
+
+  useEffect(() => {
+    productsRefetch();
+    refetchSellers();
+  }, [productsRefetch, refetchSellers]);
+
+  const handleLoginClick = () => {
+    localStorage.removeItem('token');
+    navigate('/login');
+  };
+
+  const handleSignupClick = () => {
+    localStorage.removeItem('token');
+    navigate('/signup');
+  };
+
+  const handleSellerChange = (event) => {
+    setSellerId(event.target.value);
+  };
 
   const columns = [
     {
@@ -50,48 +91,97 @@ const Products = () => {
       align: 'center',
       headerClassName: 'header-cell',
     },
+    {
+      field: 'email',
+      headerName: 'VENDEDOR',
+      flex: 1,
+      headerAlign: 'center',
+      align: 'center',
+      headerClassName: 'header-cell',
+    },
   ];
 
   return (
     <Box m="1.5rem 2.5rem">
       <Header title="Todos los Productos" />
-      <Box
-        mt="40px"
-        height="65vh"
-        sx={{
-          '& .MuiDataGrid-root': {
-            border: 'none',
-          },
-          '& .MuiDataGrid-cell': {
-            borderBottom: 'none',
-            textAlign: 'center',
-          },
-          '& .header-cell': {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderBottom: 'none',
-            textAlign: 'center',
-          },
-          '& .MuiDataGrid-virtualScroller': {
-            backgroundColor: theme.palette.primary.light,
-          },
-          '& .MuiDataGrid-footerContainer': {
-            backgroundColor: theme.palette.background.alt,
-            color: theme.palette.secondary[100],
-            borderTop: 'none',
-          },
-          '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
-            color: `${theme.palette.secondary[200]} !important`,
-          },
-        }}
-      >
-        <DataGrid
-          loading={isLoading || !data}
-          getRowId={(row) => row.id}
-          rows={data || []}
-          columns={columns}
-        />
-      </Box>
+      {productsError ? (
+        <>
+          <Box mt="40px">
+            <Typography variant="h5" color={theme.palette.secondary[300]}>
+              No estas autorizado para esta sección.
+            </Typography>
+          </Box>
+          <Box mt="40px">
+            <Button onClick={handleLoginClick} variant="contained">
+              Iniciar sesión
+            </Button>
+            <Box display="inline" mx={1} />
+            <Button onClick={handleSignupClick} variant="outlined">
+              Registrarse
+            </Button>
+          </Box>
+        </>
+      ) : (
+        <>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="flex-end"
+            mb={2}
+            sx={{
+              '& .MuiSelect-select': { color: theme.palette.secondary[100] },
+            }}
+          >
+            <Typography
+              variant="subtitle1"
+              sx={{ color: theme.palette.secondary[100], mr: 2 }}
+            >
+              Filtrar por vendedor:
+            </Typography>
+            <Select value={sellerId || ''} onChange={handleSellerChange}>
+              <MenuItem value="">Todos</MenuItem>
+              {(sellersData || []).map((seller) => {
+                return <MenuItem value={seller.id}>{seller.email}</MenuItem>;
+              })}
+            </Select>
+          </Box>
+          <Box
+            mt="40px"
+            height="65vh"
+            sx={{
+              '& .MuiDataGrid-root': {
+                border: 'none',
+              },
+              '& .MuiDataGrid-cell': {
+                borderBottom: 'none',
+              },
+              '& .MuiDataGrid-columnHeaders': {
+                backgroundColor: theme.palette.background.alt,
+                color: theme.palette.secondary[100],
+                borderBottom: 'none',
+              },
+              '& .MuiDataGrid-virtualScroller': {
+                backgroundColor: theme.palette.primary.light,
+              },
+              '& .MuiDataGrid-footerContainer': {
+                backgroundColor: theme.palette.background.alt,
+                color: theme.palette.secondary[100],
+                borderTop: 'none',
+              },
+              '& .MuiDataGrid-toolbarContainer .MuiButton-text': {
+                color: `${theme.palette.secondary[200]} !important`,
+              },
+            }}
+          >
+            <DataGrid
+              loading={productsIsLoading || !productsData}
+              getRowId={(row) => row.id}
+              rows={productsData || []}
+              columns={columns}
+            />
+          </Box>
+        </>
+      )}
     </Box>
   );
 };
