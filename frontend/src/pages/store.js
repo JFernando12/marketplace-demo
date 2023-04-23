@@ -8,12 +8,16 @@ import {
   useTheme,
   useMediaQuery,
   TextField,
+  IconButton,
+  InputBase,
 } from '@mui/material';
+import { Search } from '@mui/icons-material';
 import Header from '../components/Header';
 import Navbar from '../components/Navbar';
+import FlexBetween from '../components/FlexBetween';
 import { useGetProductsBuyerApiQuery } from '../state/api';
 
-const Product = ({ id, name, sku, price }) => {
+const Product = ({ name, sku, price }) => {
   const theme = useTheme();
 
   return (
@@ -36,7 +40,7 @@ const Product = ({ id, name, sku, price }) => {
           sku: {sku}
         </Typography>
         <Button type="submit" variant="contained" color="primary" mt="20px">
-          Añadir al carrito{' '}
+          Añadir al carrito
         </Button>
       </CardContent>
     </Card>
@@ -44,6 +48,8 @@ const Product = ({ id, name, sku, price }) => {
 };
 
 const Products = () => {
+  const theme = useTheme();
+
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('');
   const [minPrice, setMinPrice] = useState(0);
@@ -70,7 +76,10 @@ const Products = () => {
     setSearchTerm(e.target.value);
   };
 
-  const handleKeyPress = (e) => {
+  const handleSearch = (e) => {
+    setFilter(searchTerm);
+  };
+  const handleSearchKey = (e) => {
     if (e.key === 'Enter') {
       setFilter(searchTerm);
     }
@@ -91,51 +100,60 @@ const Products = () => {
 
   return (
     <>
-      <Navbar></Navbar>
+      <Navbar isStore={true}></Navbar>
       <Box m="1.5rem 2.5rem">
-        <Header title="Store" subtitle="See your list of products." />
+        <Header title="Tienda" />
         <Box display="flex" alignItems="center" justifyContent="space-between">
-          <TextField
-            label="Search"
-            value={searchTerm}
-            onChange={handleQueryChange}
-            onKeyUp={handleKeyPress}
-            sx={{ width: '40%' }}
-          />
-        </Box>
-        <Box display="flex" alignItems="center" mt="20px">
-          <Typography sx={{ mr: '1rem' }}>Rango precio:</Typography>
-          <TextField
-            variant="outlined"
-            size="small"
-            placeholder="Min"
-            type="number"
-            InputProps={{ inputProps: { min: 0 } }}
-            name="minPrice"
-            value={minPrice}
-            onChange={hanglePriceChange}
-            sx={{ mr: '1rem' }}
-          />
-          <Typography sx={{ mr: '1rem' }}>-</Typography>
-          <TextField
-            variant="outlined"
-            size="small"
-            placeholder="Max"
-            type="number"
-            InputProps={{ inputProps: { min: 0 } }}
-            name="maxPrice"
-            value={maxPrice}
-            onChange={hanglePriceChange}
-            sx={{ mr: '1rem' }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={hangleFilterChange}
+          <FlexBetween
+            backgroundColor={theme.palette.background.alt}
+            borderRadius="9px"
+            gap="3rem"
+            p="0.1rem 1.5rem"
           >
-            Filter
-          </Button>
+            <InputBase
+              placeholder="Search..."
+              onChange={handleQueryChange}
+              onKeyUp={handleSearchKey}
+            />
+            <IconButton onClick={handleSearch}>
+              <Search />
+            </IconButton>
+          </FlexBetween>
+          <Box display="flex" alignItems="center" mt="20px">
+            <Typography sx={{ mr: '1rem' }}>Rango precio:</Typography>
+            <TextField
+              variant="outlined"
+              size="small"
+              placeholder="Min"
+              type="number"
+              InputProps={{ inputProps: { min: 0 } }}
+              name="minPrice"
+              value={minPrice}
+              onChange={hanglePriceChange}
+              sx={{ mr: '1rem' }}
+            />
+            <Typography sx={{ mr: '1rem' }}>-</Typography>
+            <TextField
+              variant="outlined"
+              size="small"
+              placeholder="Max"
+              type="number"
+              InputProps={{ inputProps: { min: 0 } }}
+              name="maxPrice"
+              value={maxPrice}
+              onChange={hanglePriceChange}
+              sx={{ mr: '1rem' }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={hangleFilterChange}
+            >
+              filtrar
+            </Button>
+          </Box>
         </Box>
+
         {products || !isLoading ? (
           <Box
             mt="20px"

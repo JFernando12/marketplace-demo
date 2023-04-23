@@ -59,58 +59,61 @@ const CreateProduct = () => {
         width="400px"
         mt="50px"
       >
-        <TextField
-          id="name"
-          label="Nombre"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          margin="normal"
-          variant="outlined"
-          required
-        />
-        <TextField
-          id="sku"
-          label="SKU"
-          value={sku}
-          onChange={(e) => setSku(e.target.value)}
-          margin="normal"
-          variant="outlined"
-          required
-        />
-        <TextField
-          id="quantity"
-          label="Cantidad"
-          type="number"
-          value={quantity}
-          onChange={(e) => setQuantity(e.target.value)}
-          margin="normal"
-          variant="outlined"
-          required
-        />
-        <TextField
-          id="price"
-          label="Precio"
-          type="number"
-          value={price}
-          onChange={(e) => setPrice(e.target.value)}
-          margin="normal"
-          variant="outlined"
-          required
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          disabled={isLoading}
-          mt="20px"
-        >
-          {isLoading ? 'Creando Producto...' : 'Crear Producto'}
-        </Button>
-        {errors && (
+        {!errors ? (
+          <>
+            <TextField
+              id="name"
+              label="Nombre"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              margin="normal"
+              variant="outlined"
+              required
+            />
+            <TextField
+              id="sku"
+              label="SKU"
+              value={sku}
+              onChange={(e) => setSku(e.target.value)}
+              margin="normal"
+              variant="outlined"
+              required
+            />
+            <TextField
+              id="quantity"
+              label="Cantidad"
+              type="number"
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              margin="normal"
+              variant="outlined"
+              required
+            />
+            <TextField
+              id="price"
+              label="Precio"
+              type="number"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              margin="normal"
+              variant="outlined"
+              required
+            />
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isLoading}
+              mt="20px"
+            >
+              {isLoading ? 'Creando Producto...' : 'Crear Producto'}
+            </Button>
+          </>
+        ) : (
           <>
             <Box mt="40px">
               <Typography variant="h5" color={theme.palette.secondary[300]}>
-                No estas autorizado para esta sección.
+                Necesitas ser vendedor para esta acción.
               </Typography>
             </Box>
             <Box mt="40px">

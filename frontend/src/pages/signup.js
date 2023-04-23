@@ -78,7 +78,7 @@ const Signup = () => {
               className="button-signup"
               disabled={isLoading}
             >
-              {isLoading ? 'Loading...' : 'Send'}
+              {isLoading ? 'Cargando...' : 'Crear'}
             </button>
           </form>
           <ul className="container-errors">

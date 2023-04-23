@@ -4,7 +4,7 @@ export class InvalidCredentialsError extends CustomError {
   statusCode = 401;
 
   constructor() {
-    super('Invalid credentials');
+    super('Credenciales incorrectas.');
   }
 
   serializeErrors(): { message: string; field?: string | undefined }[] {

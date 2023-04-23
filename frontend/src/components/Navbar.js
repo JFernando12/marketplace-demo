@@ -17,7 +17,13 @@ import FlexBetween from './FlexBetween';
 import { useDispatch } from 'react-redux';
 import { setMode } from '../state';
 
-const Navbar = ({ isSidebarOpen, setIsSidebarOpen, isAdmin }) => {
+const Navbar = ({
+  isSidebarOpen,
+  setIsSidebarOpen,
+  isAdmin,
+  isLogin,
+  isStore,
+}) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const navigate = useNavigate();
@@ -31,6 +37,14 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, isAdmin }) => {
     navigate('/mis productos');
   };
 
+  const handleSignup = () => {
+    navigate('/signup');
+  };
+
+  const handleStore = () => {
+    navigate('/tienda');
+  };
+
   return (
     <AppBar
       sx={{
@@ -40,7 +54,6 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, isAdmin }) => {
       }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
-        {/* LEFT SIDE */}
         <FlexBetween>
           <IconButton onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
             {isAdmin ? (
@@ -53,30 +66,23 @@ const Navbar = ({ isSidebarOpen, setIsSidebarOpen, isAdmin }) => {
           </IconButton>
         </FlexBetween>
 
-        {/* RIGHT SIDE */}
-        {isAdmin ? (
-          <FlexBetween gap="1.5rem">
-            <IconButton onClick={() => dispatch(setMode())}>
-              {theme.palette.mode === 'dark' ? (
-                <DarkModeOutlined sx={{ fontSize: '25px' }} />
-              ) : (
-                <LightModeOutlined sx={{ fontSize: '25px' }} />
-              )}
-            </IconButton>
-            <MenuItem onClick={handleClose}>Log Out</MenuItem>
-          </FlexBetween>
-        ) : (
-          <FlexBetween gap="1.5rem">
-            <IconButton onClick={() => dispatch(setMode())}>
-              {theme.palette.mode === 'dark' ? (
-                <DarkModeOutlined sx={{ fontSize: '25px' }} />
-              ) : (
-                <LightModeOutlined sx={{ fontSize: '25px' }} />
-              )}
-            </IconButton>
+        <FlexBetween gap="1.5rem">
+          {!isStore && <MenuItem onClick={handleStore}>Tienda</MenuItem>}
+          <IconButton onClick={() => dispatch(setMode())}>
+            {theme.palette.mode === 'dark' ? (
+              <DarkModeOutlined sx={{ fontSize: '25px' }} />
+            ) : (
+              <LightModeOutlined sx={{ fontSize: '25px' }} />
+            )}
+          </IconButton>
+          {isAdmin ? (
+            <MenuItem onClick={handleClose}>Cerrar sesión</MenuItem>
+          ) : isLogin ? (
+            <MenuItem onClick={handleSignup}>Crear cuenta</MenuItem>
+          ) : (
             <MenuItem onClick={handleOpen}>Ingresar</MenuItem>
-          </FlexBetween>
-        )}
+          )}
+        </FlexBetween>
       </Toolbar>
     </AppBar>
   );

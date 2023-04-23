@@ -10,11 +10,11 @@ router.post('/currentuser', validateRequest, userController.currentuser);
 router.post(
   '/signup',
   [
-    body('email').notEmpty().isEmail().withMessage('email must be not empty'),
-    body('password').notEmpty().withMessage('password must be not empty'),
-    body('validate_password')
+    body('email').isEmail().withMessage('Proporciona un correo válido.'),
+    body('password')
       .notEmpty()
-      .withMessage('validate password must be not empty'),
+      .withMessage('Proporciona una contraseña válida.'),
+    body('validate_password').notEmpty().withMessage('Valida tu contraseña.'),
   ],
   validateRequest,
   userController.signup
@@ -23,8 +23,10 @@ router.post(
 router.post(
   '/signin',
   [
-    body('email').notEmpty().isEmail().withMessage('email must be not empty'),
-    body('password').notEmpty().withMessage('password must be not empty'),
+    body('email').isEmail().withMessage('Proporciona un correo válido.'),
+    body('password')
+      .notEmpty()
+      .withMessage('Proporciona una contraseña válida.'),
   ],
   validateRequest,
   userController.signin

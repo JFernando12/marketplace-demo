@@ -16,6 +16,7 @@ import {
   ChevronRightOutlined,
   ShoppingCartOutlined,
   ReceiptLongOutlined,
+  StoreOutlined,
 } from '@mui/icons-material';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -23,16 +24,20 @@ import FlexBetween from './FlexBetween';
 
 const navItems = [
   {
-    text: 'Mis Productos',
-    icon: <ShoppingCartOutlined />,
-  },
-  {
     text: 'Crear Producto',
     icon: <ReceiptLongOutlined />,
   },
   {
+    text: 'Mis Productos',
+    icon: <ShoppingCartOutlined />,
+  },
+  {
     text: 'Productos',
-    icon: <ReceiptLongOutlined />,
+    icon: <ShoppingCartOutlined />,
+  },
+  {
+    text: 'Tienda',
+    icon: <StoreOutlined />,
   },
 ];
 

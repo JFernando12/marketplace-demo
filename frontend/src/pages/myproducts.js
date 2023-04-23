@@ -83,7 +83,7 @@ const MyProducts = () => {
       ) : (
         <Box
           mt="40px"
-          height="72vh"
+          height="70vh"
           sx={{
             '& .MuiDataGrid-root': {
               border: 'none',

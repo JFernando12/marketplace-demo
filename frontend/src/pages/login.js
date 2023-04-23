@@ -39,7 +39,7 @@ const Login = () => {
 
   return (
     <Box flexGrow={1}>
-      <Navbar></Navbar>
+      <Navbar isLogin={true}></Navbar>
       <div className="login">
         <div className="container-login-form">
           <h2 className="title-login">Ingresar</h2>
@@ -59,7 +59,7 @@ const Login = () => {
               placeholder="Password"
             ></input>
             <button type="submit" className="button-login">
-              {isLoading ? 'Loading...' : 'Send'}
+              {isLoading ? 'Cargando...' : 'Enviar'}
             </button>
           </form>
           <ul className="container-errors">

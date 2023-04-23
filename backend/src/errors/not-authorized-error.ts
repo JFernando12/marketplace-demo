@@ -4,7 +4,7 @@ export class NotAuthorizedError extends CustomError {
   statusCode = 401;
 
   constructor() {
-    super('Not authorized');
+    super('Necesitas autorización.');
   }
 
   serializeErrors(): { message: string; field?: string | undefined }[] {
