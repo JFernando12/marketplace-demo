@@ -24,8 +24,7 @@ export interface FindParams {
   offset?: number;
   minPrice?: number;
   maxPrice?: number;
-  sku?: string;
-  name?: string;
+  key?: string;
   user_id?: number;
 }
 
@@ -49,7 +48,7 @@ export const create = async (product: CreateProduct): Promise<Product> => {
 
 export const find = async (params?: FindParams): Promise<Product[]> => {
   try {
-    const { limit, offset, minPrice, maxPrice, sku, name } = params || {};
+    const { limit, offset, minPrice, maxPrice, key } = params || {};
     let query = 'SELECT * FROM products';
     const values = [];
 
@@ -65,18 +64,11 @@ export const find = async (params?: FindParams): Promise<Product[]> => {
       values.push(maxPrice);
     }
 
-    if (sku) {
+    if (key) {
       const paramIndex = values.length + 1;
       const operator = minPrice || maxPrice ? 'AND' : 'WHERE';
-      query += ` ${operator} sku = $${paramIndex}`;
-      values.push(sku);
-    }
-
-    if (name) {
-      const paramIndex = values.length + 1;
-      const operator = minPrice || maxPrice || sku ? 'AND' : 'WHERE';
-      query += ` ${operator} name = $${paramIndex}`;
-      values.push(name);
+      query += ` ${operator} (LOWER(sku) = LOWER($${paramIndex}) OR LOWER(name) = LOWER($${paramIndex}))`;
+      values.push(key);
     }
 
     if (limit) {
@@ -91,6 +83,7 @@ export const find = async (params?: FindParams): Promise<Product[]> => {
       values.push(offset);
     }
 
+    console.log('query', query);
     const result: QueryResult = await pool.query(query, values);
     return result.rows;
   } catch (err) {

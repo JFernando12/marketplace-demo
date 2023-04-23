@@ -11,6 +11,7 @@ import Signup from './pages/signup';
 import MyProducts from './pages/myproducts';
 import Products from './pages/products';
 import CreateProduct from './pages/createproduct';
+import Store from './pages/store';
 
 function App() {
   const mode = useSelector((state) => state.global.mode);
@@ -22,9 +23,13 @@ function App() {
         <ThemeProvider theme={theme}>
           <CssBaseline />
           <Routes>
-            <Route path="/" element={<Navigate to="/mis productos" replace></Navigate>}></Route>
+            <Route
+              path="/"
+              element={<Navigate to="/mis productos" replace></Navigate>}
+            ></Route>
             <Route path="/login" Component={Login}></Route>
             <Route path="/signup" Component={Signup}></Route>
+            <Route path="/store" Component={Store}></Route>
             <Route element={<PrivateRoute Component={Layout}></PrivateRoute>}>
               <Route path="/mis productos" Component={MyProducts}></Route>
               <Route path="/productos" Component={Products}></Route>

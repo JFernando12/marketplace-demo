@@ -1,9 +1,13 @@
 /* Container */
+.title-login {
+  color: rgb(9, 0, 32);
+  margin-bottom: 30px;
+}
 .login {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 400px;
+  margin-top: 20px;
 }
 
 /* Form */

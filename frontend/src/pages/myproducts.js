@@ -27,14 +27,6 @@ const MyProducts = () => {
 
   const columns = [
     {
-      field: 'id',
-      headerName: 'ID',
-      flex: 1,
-      headerAlign: 'center',
-      align: 'center',
-      headerClassName: 'header-cell',
-    },
-    {
       field: 'sku',
       headerName: 'SKU',
       flex: 1,

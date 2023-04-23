@@ -67,8 +67,12 @@ export const api = createApi({
       }),
     }),
     getProductsBuyerApi: build.query({
-      query: () => ({
-        url: '/products/buyer',
+      query: ({ key, minPrice, maxPrice }) => ({
+        url: `/products/buyer${key ? `?key=${key}` : ''}${
+          minPrice ? `${key ? '&' : '?'}minPrice=${minPrice}` : ''
+        }${
+          maxPrice ? `${minPrice || key ? '&' : '?'}maxPrice=${maxPrice}` : ''
+        }`,
         method: 'GET',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,

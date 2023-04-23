@@ -25,6 +25,7 @@ const Layout = () => {
           user={data || {}}
           isSidebarOpen={isSidebarOpen}
           setIsSidebarOpen={setIsSidebarOpen}
+          isAdmin={true}
         />
         <Outlet />
       </Box>

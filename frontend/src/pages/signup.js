@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { saveToken } from '../services/auth';
 import { useSignupApiMutation } from '../state/api';
 import '../styles/signup.css';
+import Navbar from '../components/Navbar';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
@@ -42,45 +43,52 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup">
-      <div className="container-signup-form">
-        <h2>Crear una cuenta</h2>
-        <form className="form-signup" onSubmit={onSubmit}>
-          <input
-            className="input-signup"
-            type="text"
-            name="email"
-            value={email}
-            onChange={onChange}
-            placeholder="Correo electrónico"
-          ></input>
-          <input
-            className="input-signup"
-            type="password"
-            name="password"
-            value={password}
-            onChange={onChange}
-            placeholder="Contraseña"
-          ></input>
-          <input
-            className="input-signup"
-            type="password"
-            name="validatePassword"
-            value={validatePassword}
-            onChange={onChange}
-            placeholder="Validar contraseña"
-          ></input>
-          <button type="submit" className="button-signup" disabled={isLoading}>
-            {isLoading ? 'Loading...' : 'Send'}
-          </button>
-        </form>
-        <ul className="container-errors">
-          {errors.map((err) => (
-            <li key={err.message}>{err.message}</li>
-          ))}
-        </ul>
+    <>
+      <Navbar></Navbar>
+      <div className="signup">
+        <div className="container-signup-form">
+          <h2 className="title-signup">Crear una cuenta</h2>
+          <form className="form-signup" onSubmit={onSubmit}>
+            <input
+              className="input-signup"
+              type="text"
+              name="email"
+              value={email}
+              onChange={onChange}
+              placeholder="Correo electrónico"
+            ></input>
+            <input
+              className="input-signup"
+              type="password"
+              name="password"
+              value={password}
+              onChange={onChange}
+              placeholder="Contraseña"
+            ></input>
+            <input
+              className="input-signup"
+              type="password"
+              name="validatePassword"
+              value={validatePassword}
+              onChange={onChange}
+              placeholder="Validar contraseña"
+            ></input>
+            <button
+              type="submit"
+              className="button-signup"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Loading...' : 'Send'}
+            </button>
+          </form>
+          <ul className="container-errors">
+            {errors.map((err) => (
+              <li key={err.message}>{err.message}</li>
+            ))}
+          </ul>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

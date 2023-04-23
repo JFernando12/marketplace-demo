@@ -36,11 +36,12 @@ export const getProductsAdmin = async (req: Request, res: Response) => {
 };
 
 export const getProductsBuyer = async (req: Request, res: Response) => {
-  let { name, sku, minPrice, maxPrice } = req.query;
+  let { key, minPrice, maxPrice } = req.query;
+
+  console.log('req.query', req.query);
 
   const params: Product.FindParams = {};
-  if (typeof name == 'string') params.name = name;
-  if (typeof sku == 'string') params.sku = sku;
+  if (typeof key == 'string') params.key = key;
   if (typeof minPrice === 'string' && !isNaN(Number(minPrice)))
     params.minPrice = parseInt(minPrice);
   if (typeof maxPrice === 'string' && !isNaN(Number(maxPrice)))
