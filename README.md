@@ -37,11 +37,11 @@ http://localhost:5000/
 
 ## Notas adicionales
 
-### Este proyecto está destinado a ser utilizado en un ambiente de ejecución de prueba, no incluye compilaciones para optimización.
+- ### Este proyecto está destinado a ser utilizado en un ambiente de ejecución de prueba, no incluye compilaciones para optimización.
 
-### El archivo .env por esta ocasión se mantiene visibible para mayor agilidad.
+- ### El archivo .env por esta ocasión se mantiene visibible para mayor agilidad.
 
-### Credenciales de administrador:
+- ### Credenciales de administrador:
 
 correo electronico: admin@gmail.com |
 contraseña: admin
