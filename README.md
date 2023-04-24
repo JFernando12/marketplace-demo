@@ -20,6 +20,7 @@ npm install
 ### Ejecute el siguiente comando para construir los contenedores Docker:
 docker-compose build
 
+
 ## Ejecución
 
 ### Una vez que se han completado los pasos de instalación, ejecute la aplicación utilizando el siguiente comando:
