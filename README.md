@@ -41,7 +41,7 @@ http://localhost:5000/
 
 ### El archivo .env por esta ocasión se mantiene visibible para mayor agilidad.
 
-### Credenciales de administrodor:
+### Credenciales de administrador:
 
 correo electronico: admin@gmail.com |
 contraseña: admin
