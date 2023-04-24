@@ -21,10 +21,12 @@ npm install
 docker-compose build
 
 ## Ejecución
-Una vez que se han completado los pasos de instalación, ejecute la aplicación utilizando el siguiente comando:
+
+### Una vez que se han completado los pasos de instalación, ejecute la aplicación utilizando el siguiente comando:
 docker-compose up
 
-Esto ejecutará tanto el frontend como el backend en contenedores Docker y estarán disponibles en su navegador web en la dirección http://localhost:5000/.
+### Esto ejecutará tanto el frontend como el backend en contenedores Docker y estarán disponibles en su navegador web en la dirección:
+http://localhost:5000/
 
 ## Notas adicionales
-Este proyecto está destinado a ser utilizado en un ambiente de ejecución de prueba.
+Este proyecto está destinado a ser utilizado en un ambiente de ejecución de prueba, no incluye compilaciones para optimización.
