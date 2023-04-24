@@ -111,7 +111,7 @@ const Products = () => {
             p="0.1rem 1.5rem"
           >
             <InputBase
-              placeholder="Search..."
+              placeholder="Buscar por nombre o sku..."
               onChange={handleQueryChange}
               onKeyUp={handleSearchKey}
             />
@@ -171,7 +171,7 @@ const Products = () => {
             ))}
           </Box>
         ) : (
-          <>Loading...</>
+          <>Cargando...</>
         )}
       </Box>
     </>
