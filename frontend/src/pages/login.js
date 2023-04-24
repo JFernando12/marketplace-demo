@@ -53,7 +53,7 @@ const Login = () => {
             ></input>
             <input
               className="input-login"
-              type="text"
+              type="password"
               name="password"
               onChange={onChange}
               placeholder="Password"

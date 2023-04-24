@@ -41,11 +41,6 @@ const Products = () => {
     navigate('/login');
   };
 
-  const handleSignupClick = () => {
-    localStorage.removeItem('token');
-    navigate('/signup');
-  };
-
   const handleSellerChange = (event) => {
     setSellerId(event.target.value);
   };
@@ -100,16 +95,12 @@ const Products = () => {
         <>
           <Box mt="40px">
             <Typography variant="h5" color={theme.palette.secondary[300]}>
-              No estas autorizado para esta sección.
+              Solo el administrador tiene acceso a esta sección.
             </Typography>
           </Box>
           <Box mt="40px">
             <Button onClick={handleLoginClick} variant="contained">
               Iniciar sesión
-            </Button>
-            <Box display="inline" mx={1} />
-            <Button onClick={handleSignupClick} variant="outlined">
-              Registrarse
             </Button>
           </Box>
         </>

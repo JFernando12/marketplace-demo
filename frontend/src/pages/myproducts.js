@@ -67,7 +67,7 @@ const MyProducts = () => {
         <>
           <Box mt="40px">
             <Typography variant="h5" color={theme.palette.secondary[300]}>
-              No estas autorizado para esta sección.
+              Tienes que ser vendedor para tener acceso a esta sección.
             </Typography>
           </Box>
           <Box mt="40px">

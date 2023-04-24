@@ -1,4 +1,4 @@
-FROM node:18 AS UI_STAGE
+FROM node:18
 
 WORKDIR /app
 
