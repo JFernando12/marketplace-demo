@@ -9,7 +9,7 @@ Asegúrese de tener instalado Docker en su sistema. Si no lo tiene, descargue e 
 ## Instalación
 
 ### Clone el repositorio a su máquina local:
-git clone https://github.com/your-username/project-name.git
+git clone https://github.com/JFernando12/marketplace-demo
 
 ### Navegue a la carpeta frontend y ejecute el siguiente comando para instalar las dependencias:
 npm install --legacy-peer-deps
