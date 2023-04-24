@@ -39,7 +39,7 @@ http://localhost:5000/
 
 - ### Este proyecto está destinado a ser utilizado en un ambiente de ejecución de prueba, no incluye compilaciones para optimización.
 
-- ### El archivo .env por esta ocasión se mantiene visibible para mayor agilidad.
+- ### Los archivos .env por esta ocasión se mantiene visibles para mayor agilidad.
 
 - ### Credenciales de administrador:
 
