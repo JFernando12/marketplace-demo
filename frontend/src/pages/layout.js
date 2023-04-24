@@ -9,7 +9,6 @@ const Layout = () => {
   const isNonMobile = useMediaQuery('(min-width: 600px)');
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const { data } = useGetUserQuery(localStorage.getItem('token'));
-  console.log('dataaa', data);
 
   return (
     <Box display={isNonMobile ? 'flex' : 'block'} width="100%" height="100%">

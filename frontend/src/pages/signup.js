@@ -30,9 +30,6 @@ const Signup = () => {
 
     const { data, error } = await signup({ email, password, validatePassword });
 
-    console.log('error', error);
-    console.log('data', data);
-
     if (error) {
       setErrors(error.data);
       return;

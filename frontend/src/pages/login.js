@@ -25,7 +25,6 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log({ email, password });
     const { data, error } = await signin({ email, password });
     if (error) {
       setErrors(error.data);

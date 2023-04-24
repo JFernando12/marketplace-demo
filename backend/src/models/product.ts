@@ -83,7 +83,6 @@ export const find = async (params?: FindParams): Promise<Product[]> => {
       values.push(offset);
     }
 
-    console.log('query', query);
     const result: QueryResult = await pool.query(query, values);
     return result.rows;
   } catch (err) {
