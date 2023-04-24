@@ -43,5 +43,5 @@ http://localhost:5000/
 
 ### Credenciales de administrodor:
 
-correo electronico: admin@gmail.com
+correo electronico: admin@gmail.com |
 contraseña: admin
